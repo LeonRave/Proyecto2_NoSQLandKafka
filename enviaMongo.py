@@ -1,15 +1,12 @@
-
-import pymongo as mon
+from pymongo import MongoClient
 from kafka import KafkaConsumer
 import json
 
-
-
 consumer = KafkaConsumer('mongo_topic')
-mongoClient = mon.MongoClient('172.17.0.2',27017)
+client = MongoClient('54.174.5.92', 27017)
 
 # Conexión a la base de datos
-db = mongoClient.grad
+db = client.grad
 # Selecciona la coleccion
 leonkafka = db.leonkafka
 
@@ -23,7 +20,7 @@ for msg in consumer:
 	except:
 		print('Usuario sin nombre')
          
-	try:
-		res = leonkafka.insert_one(doc)
-	except:
-		print("Error al insertar a mongo")
+	#try:
+	res = leonkafka.insert_one(doc)
+	#except:
+	#print("Error al insertar a mongo")

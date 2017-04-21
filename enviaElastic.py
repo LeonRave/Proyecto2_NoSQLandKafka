@@ -4,8 +4,8 @@ from datetime import datetime
 import json
 
 consumer = KafkaConsumer('elastic_topic')
-es = Elasticsearch(["localhost:9200"])
-#es = Elasticsearch(["http://search-beevagrad-yzavdnk3vgybj33teqgucq7ray.us-east-1.es.amazonaws.com"])
+#es = Elasticsearch(["localhost:9200"])
+es = Elasticsearch(["http://search-beevagrad-yzavdnk3vgybj33teqgucq7ray.us-east-1.es.amazonaws.com:80"])
 
 print(">> Escuchando Twiiters en topico elastic_topic:")
 
