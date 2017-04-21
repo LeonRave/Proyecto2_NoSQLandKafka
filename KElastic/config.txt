@@ -1,0 +1,49 @@
+
+
+Zookeeper
+sudo bin/zookeeper-server-start.sh -daemon config/zookeeper.properties
+Kafka
+sudo bin/kafka-server-start.sh config/server.properties
+
+
+Productor
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+Consumidor
+bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+A
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic streams-file-input < file-input.txt
+
+Crear
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic topico
+Eliminar
+bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic topico
+Listar
+bin/kafka-topics.sh --list --zookeeper localhost:2181
+Quitar retencion
+bin/kafka-topics.sh --zookeeper localhost:13003 --alter --topic topico --config retention.ms=1000
+
+
+bin/kafka-run-class.sh org.apache.kafka.streams.examples.wordcount.WordCountDemo
+
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
+            --topic streams-wordcount-output \
+            --from-beginning \
+            --formatter kafka.tools.DefaultMessageFormatter \
+            --property print.key=true \
+            --property print.value=true \
+            --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer \
+            --property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer
+
+
+
+streams-file-input
+
+streams-wordcount-output
+
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic streams-wordcount-output --property print.key=true --property print.value=true --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer
+
+vim config/server.properties
+-- retencion = 1000
+-- delete.topic.enable=true
+
+bin/kafka-streams-application-reset.sh --application streams-wordcount --input-topics streams-file-input --intermediate-topics streams-wordcount-output  --bootstrap-servers localhost:9092 --zookeeper localhost:2181

@@ -1,0 +1,50 @@
+iniciar Elastic:
+./bin/elasticsearch 
+
+insertar en bash:_
+curl -XPUT 'localhost:9200/indice/tipo/1' -d '{"name":"alex"}'
+ver en bash:
+curl 'localhost:9200/indice/tipo/1'
+
+Logstash
+ver su ruta:
+whereis logstash
+ejemplo:
+sudo bin/logstash -e 'input { stdin { } } output { stdout {} }' --path.settings /etc/logstash
+darle privilegios a /var/log/messages:
+sudo chmod 777 /var/log/messages
+
+Ejecutar logstash con criterios:
+sudo bin/logstash -f tarea-pipeline.conf --path.settings /etc/logstash
+Script:
+input{
+   file{
+      path => "/var/log/syslog"
+      start_position => beginning
+   }
+}
+
+output {
+    elasticsearch {
+        hosts => [ "localhost:9200" ]
+        index => "leonlogs"
+#       document_type => "logs"
+    }
+}
+
+Indices:
+curl 'localhost:9200/_cat/indices?v' 
+Busqueda:
+curl 'localhost:9200/logstash-2017.04.15/_search?pretty'
+
+####################################################################################################
+Ver los twiits insertados de elastic
+http://localhost:9200/leon/mensaje/_search?pretty
+http://:search-beevagrad-yzavdnk3vgybj33teqgucq7ray.us-east-1.es.amazonaws.com
+
+use grad
+show collections
+db.leonkafka.find({})
+
+sudo docker exec -it monguito bash
+mongo 172.18.10.154:27017
