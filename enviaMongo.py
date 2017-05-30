@@ -20,7 +20,7 @@ for msg in consumer:
 	except:
 		print('Usuario sin nombre')
          
-	#try:
-	res = leonkafka.insert_one(doc)
-	#except:
-	#print("Error al insertar a mongo")
+	try:
+		res = leonkafka.insert_one(doc)
+	except:
+		print("Error al insertar a mongo")

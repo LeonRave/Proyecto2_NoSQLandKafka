@@ -25,7 +25,12 @@ class Listener(tpy.StreamListener):
 
 		try:
 			Efuture = producer.send('elastic_topic', str.encode(data1))
-			Mfuture = producer.send('mongo_topic', str.encode(data2))
+			
+			n = int(raw['palabra'].split(' ')[1])
+			print(n)
+			
+			if(n>=3):
+				Mfuture = producer.send('mongo_topic', str.encode(data2))
 
 		except:
 			print("Error codif")
@@ -52,5 +57,5 @@ producer = KafkaProducer(bootstrap_servers='localhost:9092')
 print(">> Escuchando Twiiters:")
 escucha  = Listener()
 Stream = tpy.Stream(auth=api.auth, listener=escucha)
-Stream.filter(track=['bbva', 'bancomer', 'hsbc', 'televisa', 'cnn'], languages=["es"])
+Stream.filter(track=['hola','bbva', 'bancomer', 'hsbc', 'televisa', 'cnn'], languages=["es"])
 
